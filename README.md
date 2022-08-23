@@ -7,3 +7,6 @@
 
 ## 截图
 ![QQ20220823-162505@2x.png](https://s2.loli.net/2022/08/23/J5LwMx3IVUtr7dB.png)
+
+## 其他
+故意在js里留了一个bug，如果你懂的话，那么你懂。
