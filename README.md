@@ -1,6 +1,8 @@
 # 中国地震列表
 基于HTML、JavaScript、CSS。
 
+展示近50条来自中国地震台网的地震信息（含自动报）。
+
 开发协助：丿丶夜曦（https://space.bilibili.com/12982030）
 
 ## 截图
