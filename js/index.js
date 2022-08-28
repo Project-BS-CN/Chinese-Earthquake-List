@@ -65,11 +65,12 @@ function getMainData() {
 };
 
 //剩下的行
+for (ii = 4; ii <= 50; ii++) {
+            $("#subBar" + Number(ii - 1)).after('<div id="subBar' + ii + '"><div id="subLeft' + ii + '"><div id="subTime' + ii + '">01/01 00:00</div><div id="subEpicenter' + ii + '">载入中</div><div id="subMagnitude' + ii + '">M0.0</div></div><div id="subMaxInt' + ii + '">-</div></div>')
+};
+
 function getSubData() {
     $.getJSON("https://api.wolfx.jp/cenc_eqlist.json?" + new Date().getTime(), function(json) {
-        for (ii = 4; ii <= 50; ii++) {
-            $("#subBar" + Number(ii - 1)).after('<div id="subBar' + ii + '"><div id="subLeft' + ii + '"><div id="subTime' + ii + '">01/01 00:00</div><div id="subEpicenter' + ii + '">载入中</div><div id="subMagnitude' + ii + '">M0.0</div></div><div id="subMaxInt' + ii + '">-</div></div>')
-        };
         for (i = 2; i <= 50; i++) {
             subTime = eval("json.No" + i + ".time");
             subTime = subTime.substring(5, 16);
