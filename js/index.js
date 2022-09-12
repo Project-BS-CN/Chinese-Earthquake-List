@@ -41,27 +41,38 @@ const intColor = {
 
 //第一行
 function getMainData() {
-    $.getJSON("https://api.projectbs.cn/cenc/get_data.json?" + new Date().getTime(), function(json) {
-        mainType = json.CENC.type;
-        mainDepth = json.CENC.depth;
-        mainEpicenter = json.CENC.epicenter;
-        mainStartAt = json.CENC.startAt;
-        mainMagnitude = json.CENC.magnitude;
-        mainMaxInt = calcMaxInt(mainMagnitude, mainDepth);
-        if (mainType == "自动") mainDepth = "?";
+    $.getJSON("https://api.projectbs.cn/v2/ceic/get_data.json?" + new Date().getTime(), function(json) {
+        mainType = json.data.type;
+        mainDepth = json.data.depth;
+        mainEpicenter = json.data.epicenter;
+        mainStartAt = json.data.occurTime;
+        mainMagnitude = json.data.magnitude;
         //startAt 转换
         mainStartAt = mainStartAt.replace("月", "/");
         mainStartAt = mainStartAt.replace("日", " ")
         mainStartAt = mainStartAt.replace("时", ":")
         mainTime = mainStartAt.replace("分", "")
-            //写入数据
-        $("#mainTime").text(mainTime);
-        $("#mainEpicenter").text(mainEpicenter);
-        document.getElementById("mainDepth").innerHTML = mainDepth + '<font size="3">&nbsp;km</font>';
-        document.getElementById("mainMagnitude").innerHTML = '<font size="4">M</font>' + mainMagnitude;
-        $("#mainMaxInt").css("background-color", intColor[mainMaxInt].bkcolor);
-        $("#mainMaxInt").text(mainMaxInt);
-    })
+        //写入数据
+		if (mainType == "正式") {
+			mainTime = mainTime + " 正式报";
+			mainMaxInt = calcMaxInt(mainMagnitude, mainDepth);
+			$("#mainTime").text(mainTime);
+			$("#mainEpicenter").text(mainEpicenter);
+			document.getElementById("mainDepth").innerHTML = mainDepth + '<font size="3">&nbsp;km</font>';
+			document.getElementById("mainMagnitude").innerHTML = '<font size="4">M</font>' + mainMagnitude;
+			$("#mainMaxInt").css("background-color", intColor[mainMaxInt].bkcolor);
+			document.getElementById("mainMaxInt").innerHTML = '<span style="position:relative; top:-2px">' + mainMaxInt + "</span>";
+		}else if (mainType == "自动"){
+			mainDepth = "?";
+			mainTime = mainTime + " 自动报";
+			$("#mainTime").text(mainTime);
+			$("#mainEpicenter").text(mainEpicenter);
+			document.getElementById("mainDepth").innerHTML = mainDepth + '<font size="3">&nbsp;km</font>';
+			document.getElementById("mainMagnitude").innerHTML = '<font size="4">M</font>' + mainMagnitude;
+			$("#mainMaxInt").css("background-color", "#444444");
+			document.getElementById("mainMaxInt").innerHTML = '<span style="position:relative; top:-2px">' + "-" + "</span>";
+		};
+	});
 };
 
 //剩下的行
